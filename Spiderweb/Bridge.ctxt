@@ -1,0 +1,27 @@
+#BlueJ class context
+comment0.target=Bridge
+comment0.text=\r\n\ Clase\ dedicada\ a\ crear\ los\ puentes\r\n
+comment1.params=
+comment1.target=Bridge()
+comment1.text=\r\n\ Constructor\ de\ la\ clase\ Bridge\r\n
+comment2.params=color\ x1\ y1\ x2\ y2
+comment2.target=void\ addBridge(java.lang.String,\ int,\ int,\ int,\ int)
+comment2.text=\r\n\ a\u00F1ade\ puentes\ a\ la\ telara\u00F1a\ teniendo\ en\ cuenta\ sus\ coordenadas\ aisgnadas\ en\ la\ matriz\ de\ modelamiento\ de\ la\ telara\u00F1\u00E1\r\n
+comment3.params=color
+comment3.target=void\ deleteBridge(java.lang.String)
+comment3.text=\r\n\ Parte\ logica\ del\ metodo\ addBridge\r\n
+comment4.params=color
+comment4.target=void\ borrarPuenteGrafico(java.lang.String)
+comment4.text=\r\n\ Borra\ puentes\ a\ la\ telara\u00F1a\ teniendo\ en\ cuenta\ sus\ coordenadas\ aisgnadas\ en\ la\ matriz\ de\ modelamiento\ de\ la\ telara\u00F1\u00E1\r\n
+comment5.params=color\ nuevoX1\ nuevoY1\ nuevoX2\ nuevoY2
+comment5.target=void\ relocateBridge(java.lang.String,\ int,\ int,\ int,\ int)
+comment5.text=\r\n\ Reubiuca\ puentes\ a\ la\ telara\u00F1a\ teniendo\ en\ cuenta\ sus\ coordenadas\ aisgnadas\ en\ la\ matriz\ de\ modelamiento\ de\ la\ telara\u00F1\u00E1\r\n\ El\ procedimiento\ es\ el\ siguiente\:\r\n\ Borrar\ el\ puente\ con\ las\ coordenadas\ anteriores,\ Crear\ el\ puente\ con\ las\ coordenadas\ nuevas\r\n
+comment6.params=
+comment6.target=void\ makeVisible()
+comment6.text=\r\n\ Vuelve\ visibles\ los\ puentes\r\n
+comment7.params=
+comment7.target=void\ makeInvisible()
+comment7.text=\r\n\ Vuelve\ invisibles\ los\ puentes\r\n
+comment8.params=color
+comment8.target=Bridge.Coordenadas[]\ obtenerCoordenadas(java.lang.String)
+numComments=9

@@ -1,0 +1,22 @@
+#BlueJ class context
+comment0.target=Spot
+comment0.text=\r\n\ Clase\ dedicada\ a\ crear\ los\ spots\r\n
+comment1.params=
+comment1.target=Spot()
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Spot\r\n
+comment2.params=color\ X\ Y
+comment2.target=void\ addSpot(java.lang.String,\ int,\ int)
+comment2.text=\r\n\ Agrega\ los\ puntos\ donde\ la\ ara\u00F1a\ duerme\r\n
+comment3.params=color
+comment3.target=void\ deleteSpot(java.lang.String)
+comment3.text=\r\n\ Elimina\ los\ puntos\r\n
+comment4.params=color
+comment4.target=void\ borrarSpotGrafico(java.lang.String)
+comment4.text=\r\n\ Borra\ los\ spots.\r\n
+comment5.params=
+comment5.target=void\ makeVisible()
+comment5.text=\r\n\ Vuelve\ visibles\ los\ puentes\r\n
+comment6.params=
+comment6.target=void\ makeInvisible()
+comment6.text=\r\n\ Vuelve\ invisibles\ los\ puentes\r\n
+numComments=7
