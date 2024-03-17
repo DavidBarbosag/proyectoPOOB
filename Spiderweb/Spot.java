@@ -39,7 +39,12 @@ public class Spot
          spotsGraficos.add(spot);
     }
     
-    
+    /**
+     * Traduce distancia y camino en coordenadas x,y
+     * @param distancia es un vector que se va a traducir.
+     * @param camino es un vector que se va a traducir.
+     * @param strandNumber sirve para ubicar las líneas que hay y ver los ángulos.
+     */    
     private int[] traductorSpots(int distancia, int camino, int strandNumber){
         double angleIncrement = 360.0 / strandNumber;
         double angle = angleIncrement * camino;
@@ -57,6 +62,7 @@ public class Spot
     
     /**
      * Elimina los puntos
+     * @param color es el indicador del spot que se va a eliminar.
      */
     public void deleteSpot(String color){
         spots.remove(color);
@@ -65,6 +71,7 @@ public class Spot
     
     /**
      * Borra los spots.
+     * @param color es el indicador del spot que se va a eliminar.
      */
     private void borrarSpotGrafico(String color) {
         for (Circle spot : spotsGraficos) {

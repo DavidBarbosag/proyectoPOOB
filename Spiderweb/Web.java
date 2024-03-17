@@ -21,6 +21,7 @@ public class Web {
     }
     /**
      * set radio
+     * @param radio Se crea el set del radio de la telaraña.
      */
     public void setRadio(int radio) {
         this.radio = radio;
@@ -47,6 +48,9 @@ public class Web {
 
     /**
      * Añade un hilo
+     * @param centerX se pone el centro en x.
+     * @param centerY se pone el centro en y.
+     * @param angle se determina el ángulo que tendrá este hilo de los otros.
      */
     private Line createStrand(int centerX, int centerY, double angle){
         Line strand = new Line();
@@ -70,7 +74,8 @@ public class Web {
     
     
     /**
-     * Expande el radio de la telaraña y sus hilos en un numero determinado(extra).
+     * Expande el radio de la telaraña y sus hilos en un número determinado (extra).
+     * @param extra es la cantidad adicional que se va a expandir la telaraña.
      */
     public void expand(int extra){
         eraseAllStrands();
