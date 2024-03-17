@@ -17,6 +17,7 @@ public class Spiderweb
     private Web web;
     private int strandNumber = 0;
     private int spotNumber = 0;
+    private int spiderLastPath;
     //private int radio = web.getRadio();
     private Bridge bridge;
     private Spot spot;
@@ -76,8 +77,6 @@ public class Spiderweb
         return strandNumber;
     }
     
-    
-    
     /**
      * Añade un nuevo hilo a la telaraña
      */
@@ -92,8 +91,6 @@ public class Spiderweb
     public void expand(int extra){
         web.expand(extra);
     }
-    
-    
     
     /**
      * metodo que simula la primera linea de la solucion del proyecto
@@ -123,15 +120,15 @@ public class Spiderweb
      */
     public void create2(int[][] bridges){
         String color = "black";
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < bridges.length ; i++) {
             addBridge(color, bridges[i][0], bridges[i][1]);
             System.out.println(""+  bridges[i][0]+ bridges[i][1]);
         }
     }
     
-    /*
-     * 
-    Metodo creado para verificar que create2 funciona
+    
+    /* 
+    //Metodo creado para verificar que create2 funciona
     public void useCreate2(){
         int[][] matriz = {         
             {100, 1},
@@ -169,12 +166,22 @@ public class Spiderweb
         return respuesta;
     }
     
+    /**
+     * Metodo para consultar los puentes que No se han utilizado
+     */
     public void unusedBridges(){
+        for (int i = 0; i < unusedBridges.size(); i++) {
+            System.out.println(unusedBridges.get(i));
+        }
+    } 
+        
     
-    
-    }   
-    
-    
+    /**
+     * Metodo para consultar los puentes que No se han utilizado
+     */
+    public int spiderLastPath(){
+        return spiderLastPath;
+    }
     
     /**
      * añade puentes a la telaraña teniendo en cuenta sus coordenadas aisgnadas en la matriz de modelamiento de la telaraña
@@ -227,15 +234,34 @@ public class Spiderweb
         bridge.relocateBridge(color, x1, y1, x2, y2);
     }
     
+    
+    private int[] traductorSpots(int distancia, int camino){
+        double angleIncrement = 360.0 / strandNumber;
+        double angle = angleIncrement * camino;
+        double angle2 = angleIncrement * (camino + 1);
+    
+        int x1 = (int) ((distancia * Math.cos(Math.toRadians(angle))));
+        int x1Corregido = x1 + 350;
+   
+        int y1 = (int) ((distancia * Math.sin(Math.toRadians(angle))));
+        int y1Corregido =  350 - y1;
+        
+        int[] respuesta = {x1Corregido, y1Corregido};
+        return respuesta;
+    }
+    
+    
     /**
      * Agrega los puntos, utilizando la matriz (spotMatriz).
      * Si hay un spot es true sino es false
      * @param color del spot
-     * @param x es la coordenada x 
-     * @param y es la coordenada y
+     * @param distancia es la distanica donde estara ubicado el puente con respecto al centro de la telaraña
+     * @param camino es el camino donde se ubicara el spot
      */
-    public void addSpot(String color, int X, int Y){
-        spot.addSpot(color, X, Y);
+    public void addSpot(String color, int distancia, int camino){
+        int[] respuesta = new int[1];
+        respuesta = traductorSpots(distancia , camino);
+        spot.addSpot(color, respuesta[0] - 15, respuesta[1]);
     }
     
     
@@ -298,7 +324,6 @@ public class Spiderweb
      * Consulta la cantidad de spots creados
      */
     public int spots(){
-        spotNumber++;
         return spotNumber;
     }
     
