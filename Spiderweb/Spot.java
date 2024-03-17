@@ -32,7 +32,7 @@ public class Spot
          Coordenadas coordenadas = new Coordenadas(distancia, camino);
          spots.put(color, coordenadas);
          Circle spot = new Circle();
-         spot.setXPosition(respuesta[0] - 15);
+         spot.setXPosition(respuesta[0] - 16);
          spot.setYPosition(respuesta[1]);
          spot.changeColor(color);
          spot.makeVisible();
