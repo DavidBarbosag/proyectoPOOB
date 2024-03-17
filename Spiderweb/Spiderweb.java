@@ -96,6 +96,7 @@ public class Spiderweb
      * metodo que simula la primera linea de la solucion del proyecto
      * @param strands es el numero de hilos que tendra la telararaña
      * @param radio es la longitud que tendran los hilos de la telaraña
+     * @param favorite es la hebra favorita de la araña
      */
     public void create1(int strands, int radio, int favorite){
         if (strands < 3){
