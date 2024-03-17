@@ -128,7 +128,7 @@ public class Spiderweb
     }
     
     
-    /* 
+    
     //Metodo creado para verificar que create2 funciona
     public void useCreate2(){
         int[][] matriz = {         
@@ -138,34 +138,9 @@ public class Spiderweb
         };
         create2(matriz);
     }
-    */
     
-    /**
-     * Traduce de distancia, camino a coordenadas x y
-     * @param distancia a donde se movera el objeto
-     * @param camino  a donde se movera el objeto
-     */
-    private int[] traductor(int distancia, int camino){
-        double angleIncrement = 360.0 / strandNumber;
-        double angle = angleIncrement * camino;
-        double angle2 = angleIncrement * (camino + 1);
-        
-        int x1 = (int) ((distancia * Math.cos(Math.toRadians(angle))));
-        int x1Corregido = x1 + 350;
-   
-        int y1 = (int) ((distancia * Math.sin(Math.toRadians(angle))));
-        int y1Corregido =  350 - y1;
- 
-        int x2 = (int) ((distancia * Math.cos(Math.toRadians(angle2))));
-        int x2Corregido = x2 + 350;
-
-        int y2 = (int) ((distancia * Math.sin(Math.toRadians(angle2))));
-        int y2Corregido =  350 - y2;
-        
-        int[] respuesta = {x1Corregido, y1Corregido, x2Corregido, y2Corregido};
-        
-        return respuesta;
-    }
+    
+    
     
     /**
      * Metodo para consultar los puentes que No se han utilizado
@@ -192,15 +167,7 @@ public class Spiderweb
      * @param camino es el camino donde se ubicar el punto inicial del puente 
      */
     public void addBridge(String color, int distancia, int camino) {
-        int[] respuesta = new int[3];
-        respuesta = traductor(distancia , camino);
-        int x1 = respuesta[0];
-        int y1 = respuesta[1];
-        int x2 = respuesta[2];
-        int y2 = respuesta[3];
-        bridge.addBridge(color, x1, y1, x2, y2);
-        int[] coords = {x1, y1, x2, y2};
-        coordPuentes.add(coords);
+        bridge.addBridge(color, distancia, camino, strandNumber);
         unusedBridges.add(color);
     }
     
@@ -226,13 +193,7 @@ public class Spiderweb
      * @param camino es el camino donde se ubicar el punto inicial del puente 
      */
     public void relocateBridge(String color, int distancia, int camino){
-        int[] respuesta = new int[3];
-        respuesta = traductor(distancia , camino);
-        int x1 = respuesta[0];
-        int y1 = respuesta[1];
-        int x2 = respuesta[2];
-        int y2 = respuesta[3];
-        bridge.relocateBridge(color, x1, y1, x2, y2);
+        bridge.relocateBridge(color, distancia, camino, strandNumber);
     }
     
     /**
