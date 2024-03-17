@@ -235,23 +235,6 @@ public class Spiderweb
         bridge.relocateBridge(color, x1, y1, x2, y2);
     }
     
-    
-    private int[] traductorSpots(int distancia, int camino){
-        double angleIncrement = 360.0 / strandNumber;
-        double angle = angleIncrement * camino;
-        double angle2 = angleIncrement * (camino + 1);
-    
-        int x1 = (int) ((distancia * Math.cos(Math.toRadians(angle))));
-        int x1Corregido = x1 + 350;
-   
-        int y1 = (int) ((distancia * Math.sin(Math.toRadians(angle))));
-        int y1Corregido =  350 - y1;
-        
-        int[] respuesta = {x1Corregido, y1Corregido};
-        return respuesta;
-    }
-    
-    
     /**
      * Agrega los puntos, utilizando la matriz (spotMatriz).
      * Si hay un spot es true sino es false
@@ -260,9 +243,7 @@ public class Spiderweb
      * @param camino es el camino donde se ubicara el spot
      */
     public void addSpot(String color, int distancia, int camino){
-        int[] respuesta = new int[1];
-        respuesta = traductorSpots(distancia , camino);
-        spot.addSpot(color, respuesta[0] - 15, respuesta[1]);
+        spot.addSpot(color, distancia, camino, strandNumber);
     }
     
     

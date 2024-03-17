@@ -18,23 +18,42 @@ public class Spot
         spotsGraficos = new ArrayList<>();
     }
     
-    
-    
-    
     /**
-     * Agrega los puntos donde la araña duerme
+     * Agrega los puntos, utilizando la matriz (spotMatriz).
+     * Si hay un spot es true sino es false
+     * @param color del spot
+     * @param distancia es la distanica donde estara ubicado el puente con respecto al centro de la telaraña
+     * @param camino es el camino donde se ubicara el spot
+     * @param strandNumber es el numero de hebras que hay en la Web
      */
-    public void addSpot(String color, int X, int Y){
-         Coordenadas coordenadas = new Coordenadas(X, Y);
+    public void addSpot(String color, int distancia , int camino, int strandNumber){
+         int[] respuesta = new int[1];
+         respuesta = traductorSpots(distancia , camino, strandNumber);
+         Coordenadas coordenadas = new Coordenadas(distancia, camino);
          spots.put(color, coordenadas);
          Circle spot = new Circle();
-         spot.setXPosition(X);
-         spot.setYPosition(Y);
+         spot.setXPosition(respuesta[0] - 15);
+         spot.setYPosition(respuesta[1]);
          spot.changeColor(color);
          spot.makeVisible();
          spotsGraficos.add(spot);
     }
     
+    
+    private int[] traductorSpots(int distancia, int camino, int strandNumber){
+        double angleIncrement = 360.0 / strandNumber;
+        double angle = angleIncrement * camino;
+        double angle2 = angleIncrement * (camino + 1);
+    
+        int x1 = (int) ((distancia * Math.cos(Math.toRadians(angle))));
+        int x1Corregido = x1 + 350;
+   
+        int y1 = (int) ((distancia * Math.sin(Math.toRadians(angle))));
+        int y1Corregido =  350 - y1;
+        
+        int[] respuesta = {x1Corregido, y1Corregido};
+        return respuesta;
+    }
     
     /**
      * Elimina los puntos
@@ -81,20 +100,20 @@ public class Spot
      * Clase para almacenar las coordenadas de los puentes
      */
     private class Coordenadas {
-        private int x;
-        private int y;
+        private int distancia;
+        private int camino;
 
-        public Coordenadas(int x, int y) {
-            this.x = x;
-            this.y = y;
+        public Coordenadas(int distancia, int y) {
+            this.distancia = distancia;
+            this.camino = camino;
         }
 
-        public int getX() {
-            return x;
+        public int getDistancia() {
+            return distancia;
         }
 
-        public int getY() {
-            return y;
+        public int getCamino() {
+            return camino;
         }
     }
 
