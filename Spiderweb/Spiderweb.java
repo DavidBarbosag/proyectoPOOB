@@ -3,6 +3,8 @@ import javax.swing.JOptionPane;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.HashMap;
+
 /**
  * Es la Clase fachada del proyecto, donde se hace la simulacion.
  * Para el modelamiento de la matriz se tomaron los siguientes valores:
@@ -14,11 +16,12 @@ public class Spiderweb
     private int contadorPuentes = 0;
     private Web web;
     private int strandNumber = 0;
+    private int spotNumber = 0;
     //private int radio = web.getRadio();
     private Bridge bridge;
     private Spot spot;
-    private ArrayList<int[]> coordPuentes = new ArrayList<>();;
-        
+    private ArrayList<int[]> coordPuentes = new ArrayList<>();
+    private HashMap<String, int[]> puentes = new HashMap<>(); 
 
     /**
      * Constructor for objects of class Spiderweb
@@ -90,35 +93,41 @@ public class Spiderweb
     }
     
     public void create(int n, int m, int s){
-
-        for(int i = 0; i < n; i++){
-            addStrand();
-        }
-        expand(300);
-        Scanner scanner = new Scanner(System.in); 
-        for(int y = 0; y < m; y++){
-            
-            System.out.println("Digite el color");
-            String color = scanner.nextLine();
-            
-            System.out.println("Digite la distancia");
-            int distancia = scanner.nextInt();
-            
-            System.out.println("Digite el camino");
-            int camino = scanner.nextInt();
-            
-            int[] valores = traductor(distancia, camino);
-            addBridge(color, valores[0], valores[1], valores[2], valores[3]);
-            
-        }
-        scanner.close(); 
+    for(int i = 0; i < n; i++){
+        addStrand();
     }
+    expand(300);
+    Scanner scanner = new Scanner(System.in); 
+    for(int y = 0; y < m; y++){
+        System.out.println("Digite el color");
+        String color = scanner.nextLine();
+        System.out.println("Digite la distancia");
+        int distancia = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Digite el camino");
+        int camino = scanner.nextInt();
+        scanner.nextLine();
+        
+        puentes.put(color, new int[]{distancia, camino}); // Agrega el puente al HashMap
+        
+        int[] valores = traductor(distancia, camino);
+        // Usa el color como clave para obtener los datos del puente del HashMap
+        addBridge(color, valores[0], valores[1], valores[2], valores[3]);
+    }
+    scanner.close(); 
+}
+
 
     
+    private void Addpks(String color, int a, int b, int c, int d){
+        addBridge(color, a, b, c, d);
+    }
     
     
     /**
      * Traduce de distancia, camino a coordenadas x y
+     * @param distancia a donde se movera el objeto
+     * @param camino  a donde se movera el objeto
      */
     private int[] traductor(int distancia, int camino){
         double angleIncrement = 360.0 / strandNumber;
@@ -145,8 +154,13 @@ public class Spiderweb
     
     
     /**
-     * añade puentes a la telaraña teniendo en cuenta sus coordenadas aisgnadas en la matriz de modelamiento de la telarañá
+     * añade puentes a la telaraña teniendo en cuenta sus coordenadas aisgnadas en la matriz de modelamiento de la telaraña
      * y añade las coordenadas a un arrayList
+     * @param color que tendra el puente
+     * @param x1 es la coordenada x inicial
+     * @param y1 es la coordenada y inicial
+     * @param x2 es la coordenada x final
+     * @param y2 es la coordenada y final
      */
     public void addBridge(String color, int x1, int y1, int x2, int y2) {
         bridge.addBridge(color, x1, y1, x2, y2);
@@ -156,16 +170,22 @@ public class Spiderweb
     
     
     /**
-     * Borra puentes a la telaraña teniendo en cuenta sus coordenadas aisgnadas en la matriz de modelamiento de la telarañá
+     * Borra puentes a la telaraña teniendo en cuenta sus coordenadas aisgnadas en la matriz de modelamiento de la telaraña
+     * @param color se usa para ubicar el puente que se va a borrar
      */
     public void deleteBridge(String color){
         bridge.deleteBridge(color);
     }
     
     /**
-     * Reubiuca puentes a la telaraña teniendo en cuenta sus coordenadas aisgnadas en la matriz de modelamiento de la telarañá
+     * Reubiuca puentes a la telaraña teniendo en cuenta sus coordenadas aisgnadas en la matriz de modelamiento de la telaraña
      * El procedimiento es el siguiente:
      * Borrar el puente con las coordenadas anteriores, Crear el puente con las coordenadas nuevas
+     * @param color se usa para ubicar el puente que se va a reubicar
+     * @param x1 es la coordenada x inicial
+     * @param y1 es la coordenada y inicial
+     * @param x2 es la coordenada x final
+     * @param y2 es la coordenada y final
      */
     public void relocateBridge(String color, int nuevoX1, int nuevoY1, int nuevoX2, int nuevoY2){
         bridge.relocateBridge(color, nuevoX1, nuevoY1, nuevoX2, nuevoY2);
@@ -174,6 +194,9 @@ public class Spiderweb
     /**
      * Agrega los puntos, utilizando la matriz (spotMatriz).
      * Si hay un spot es true sino es false
+     * @param color del spot
+     * @param x es la coordenada x 
+     * @param y es la coordenada y
      */
     public void addSpot(String color, int X, int Y){
         spot.addSpot(color, X, Y);
@@ -183,6 +206,7 @@ public class Spiderweb
     /**
      * Elimina los puntos, utilizando la matriz (spotMatriz).
      * Si hay un spot es true sino es false
+     * @param color se usa para ubicar el puente que se va a reubicar
      */
     public void deleteSpot(String color){
         spot.deleteSpot(color);
@@ -214,74 +238,32 @@ public class Spiderweb
      * y le cambia el color para identificar su estado
      */
     public void spiderSit(){
-        araña.moveAllTo(340, 350);
         araña.spiderSit();
     }
     
     /**
-     * mueve la araña de forma automatica al camino elegido
+     * mueve la araña de forma automatica a la coordenada elegida
+     * @param coordenada x a donde se movera la araña
+     * @param coordenada y a donde se movera la araña
      */
-    public void spiderWalk(int camino, int distancia) {
-        int nStrands = strandNumber;
-        double angleIncrement = 360.0 / nStrands;
-        int[][] coordX = new int[nStrands][];
-        for (int i = 0; i < nStrands; i++) {
-            double angle = i * angleIncrement;
-            coordX[i] = araña.createStrand(350, 350, angle, distancia);
-        }
-        
-        int[] targetCoordinates = coordX[camino]; 
-        for (int[] coords : coordPuentes) {
-            int[] startPoint = {coords[0], coords[1]}; 
-            int[] endPoint = {coords[2], coords[3]}; 
-            if (isInsideBridge(targetCoordinates, startPoint, endPoint)) {
-                araña.moveAllTo(endPoint[0], endPoint[1]);
-                int remainingDistance = distancia - distanceBetweenPoints(targetCoordinates, endPoint);
-                moveSpiderAlongPath(endPoint[0], endPoint[1],camino, remainingDistance);
-                return;
-            }
-        }
-        araña.moveAllTo(targetCoordinates[0], targetCoordinates[1]);
+    public void spiderWalk(int x, int y) {
+        araña.spiderWalk(x, y);
         
     }
 
-    
-    /**
-     * Verifica si las coordenadas objetivo están dentro de un puente.
-     */
-    private boolean isInsideBridge(int[] target, int[] start, int[] end) {
-        
-        if ((target[0] >= start[0] && target[0] <= end[0]) || (target[0] <= start[0] && target[0] >= end[0])) {
-            double slope = (double) (end[1] - start[1]) / (end[0] - start[0]);
-            double yIntercept = start[1] - slope * start[0];
-            double yOnBridgeLine = slope * target[0] + yIntercept;
-            return Math.abs(yOnBridgeLine - target[1]) <= 1; 
-        } else {
-            return false;
-        }
-    }
-
-    
-    /**
-     * Calcula la distancia entre dos puntos.
-     */
-    private int distanceBetweenPoints(int[] point1, int[] point2) {
-        int dx = point2[0] - point1[0];
-        int dy = point2[1] - point1[1];
-        return (int) Math.sqrt(dx * dx + dy * dy);
-    }
-    
+    /*
     private void moveSpiderAlongPath(int x1,int y1,int camino , int distancia) {
     araña.spiderWalk(strandNumber, camino + 1, distancia, x1, y1);
-    }    
+    }
+    */
 
     
     /**
      * Consulta la cantidad de spots creados
      */
     public int spots(){
-        int contador = 0;
-        return contador;
+        spotNumber++;
+        return spotNumber;
     }
     
     /**

@@ -1,4 +1,7 @@
-
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.HashMap;
 /**
  * Esta clase será el cuerpo de la araña, teniendo en cuenta los objetos de Shapes.
  *
@@ -7,19 +10,21 @@
  */
 public class Araña
 {
-    // instance variables - replace the example below with your own
     private Rectangle pata1;
     private Rectangle pata2;
     private Rectangle pata3;
     private Rectangle pata4;
     private Circle cara;
     private Circle cuerpo;
+    private int[] posicion = new int[2]; 
 
     /**
      * A continuación se creará el método constructor:
      */
     public Araña()
     {
+        posicion[0] = 75;
+        posicion[1] = 60;
         cara();
         cuerpo();
         pata1();
@@ -27,6 +32,28 @@ public class Araña
         pata3();
         pata4();
     }
+    
+     /**
+     * Getter para obtener las coordenadas de la araña.
+     * Devuelve un arreglo de enteros donde la posición 0 es la coordenada x
+     * y la posición 1 es la coordenada y.
+     */
+    public int[] getPosicion() {
+        return posicion;
+    }
+    
+    
+    /**
+     * Setter para establecer las coordenadas de la araña.
+     * @param x La coordenada x
+     * @param y La coordenada y
+     */
+    public void setPosicion(int x, int y) {
+        posicion[0] = x;
+        posicion[1] = y;
+    }
+    
+    
     /**
      * A continuación se creará el atributo cara del método constructor:
      */
@@ -125,6 +152,8 @@ public class Araña
     }
     /**
      * A continuación se creará el método moverTodos para la araña:
+     * @param dx, dx coordenada donde se movera x
+     * @param dy, dy coordenada donde se movera y
      */
     public void moverTodos(int dx, int dy) {
         cara.makeInvisible();
@@ -152,13 +181,7 @@ public class Araña
         pata4.moveVertical(dy);
         pata4.makeVisible();
         }
-    /**
-     * En siguiente método, se tomó la desición de que cuando la araña está sentada cambiará
-     * de color con el fin de identificar la acción.
-     */
-    public void spiderSit(){
-        changeColor();
-    }
+        
     /**
      * Cambia el color de la araña
      */
@@ -174,30 +197,29 @@ public class Araña
     /**
      * En siguiente método, se tomó la desición de que cuando la araña está caminando cambiará
      * de color con el fin de identificar la acción.
+     * @param coordenada x a donde se movera la araña
+     * @param coordenada y a donde se movera la araña
      */
-    public void spiderWalk(int nStrands, int camino, int distancia, int X,int Y){
-        double angleIncrement = 360.0 / nStrands;
-        int[][] coordX = new int[nStrands][];
-        // guarda las coordenadas de los posibles caminos
-        for (int i = 0; i < nStrands; i++) {
-            double angle = i * angleIncrement;
-            coordX[i] = createStrand(X, Y, angle, distancia);
-        }
-        moveAllTo(coordX[camino][0], coordX[camino][1]);
+    public void spiderWalk(int x,int y){
+        changeColor2();
+        moveAllTo(x, y);
         
     }
     
     /**
-     * calcula las coordenadas para que la araña camine
+     * Sienta a la araña en el centro de la telaraña 
+     * y le cambia el color para identificar su estado
      */
-    public int[] createStrand(int centerX, int centerY, double angle, int radio){
-        int coordX = (int) (centerX + radio * Math.cos(Math.toRadians(angle)));
-        int coordY = (int) (centerY + radio * Math.sin(Math.toRadians(angle)));
-        int[] coordenadas = {coordX, coordY};
-        return coordenadas;
+    public void spiderSit(){
+        moveAllTo(350, 350);
+        changeColor3();
     }
     
     
+    /**
+     * metodo de cambio de color auxiliar para el metodo de spiderWalk ya que al moverse la araña
+     * su color debe de ser negro
+     */
     private void changeColor2(){
         cara.changeColor("black");
         cuerpo.changeColor("black");
@@ -206,8 +228,24 @@ public class Araña
         pata3.changeColor("black");
         pata4.changeColor("black");
     }
+    
+    /**
+     * metodo de cambio de color auxiliar para el metodo de spiderSit ya que al sentarse la araña
+     * su color debe de ser rojo
+     */
+    private void changeColor3(){
+        cara.changeColor("red");
+        cuerpo.changeColor("red");
+        pata1.changeColor("red");
+        pata2.changeColor("red");
+        pata3.changeColor("red");
+        pata4.changeColor("red");
+    }
+    
     /**
      * A continuación se creará el método para mover la araña a una posición específica:
+     * @param coordenada x a donde se movera la araña
+     * @param coordenada y a donde se movera la araña
      */
     public void moveAllTo(int coordenadaX, int coordenadaY){
         cara.moveTo(coordenadaX, coordenadaY);
@@ -216,8 +254,9 @@ public class Araña
         pata2.moveTo(coordenadaX -15, coordenadaY + 45);
         pata3.moveTo(coordenadaX - 20, coordenadaY + 38);
         pata4.moveTo(coordenadaX - 20, coordenadaY + 28);
+        setPosicion(coordenadaX, coordenadaY);
+        int[] pos = getPosicion();
     }
-   
 }
 
     

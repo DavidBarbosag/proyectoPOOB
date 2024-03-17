@@ -57,6 +57,7 @@ public class Line {
     public void changeColor(String newColor) {
         color = newColor;
         draw();
+        makeVisible();
     }
 
         
