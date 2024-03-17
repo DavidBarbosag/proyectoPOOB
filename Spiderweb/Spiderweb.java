@@ -17,12 +17,14 @@ public class Spiderweb
     private Web web;
     private int strandNumber = 0;
     private int spotNumber = 0;
+    private int spiderLastPath;
     //private int radio = web.getRadio();
     private Bridge bridge;
     private Spot spot;
+    private int favoriteStrand = 0;
     private ArrayList<int[]> coordPuentes = new ArrayList<>();
     private HashMap<String, int[]> puentes = new HashMap<>(); 
-
+    private ArrayList<String> unusedBridges = new ArrayList<>();
     /**
      * Constructor for objects of class Spiderweb
      */
@@ -41,7 +43,7 @@ public class Spiderweb
     private void araña()
     {
         araña = new Araña();
-        araña.moveAllTo(340, 350);
+        araña.moveAllTo(350, 350);
         araña.makeVisible();
     }
     
@@ -75,8 +77,6 @@ public class Spiderweb
         return strandNumber;
     }
     
-    
-    
     /**
      * Añade un nuevo hilo a la telaraña
      */
@@ -92,37 +92,52 @@ public class Spiderweb
         web.expand(extra);
     }
     
-    public void create(int n, int m, int s){
-    for(int i = 0; i < n; i++){
-        addStrand();
-    }
-    expand(300);
-    Scanner scanner = new Scanner(System.in); 
-    for(int y = 0; y < m; y++){
-        System.out.println("Digite el color");
-        String color = scanner.nextLine();
-        System.out.println("Digite la distancia");
-        int distancia = scanner.nextInt();
-        scanner.nextLine();
-        System.out.println("Digite el camino");
-        int camino = scanner.nextInt();
-        scanner.nextLine();
+    /**
+     * metodo que simula la primera linea de la solucion del proyecto
+     * @param strands es el numero de hilos que tendra la telararaña
+     * @param radio es la longitud que tendran los hilos de la telaraña
+     */
+    public void create1(int strands, int radio, int favorite){
+        if (strands < 3){
+            JOptionPane.showMessageDialog(null, "El numero de hilos debe de ser mayor a 3");
+        }else{
+            for(int i = 0; i < strands; i++){
+                addStrand();
+            }
+        }
+        if (radio <= 20){
+            JOptionPane.showMessageDialog(null, "El radio debe ser mayor a 20");
         
-        puentes.put(color, new int[]{distancia, camino}); // Agrega el puente al HashMap
-        
-        int[] valores = traductor(distancia, camino);
-        // Usa el color como clave para obtener los datos del puente del HashMap
-        addBridge(color, valores[0], valores[1], valores[2], valores[3]);
-    }
-    scanner.close(); 
-}
-
-
-    
-    private void Addpks(String color, int a, int b, int c, int d){
-        addBridge(color, a, b, c, d);
+        }else{
+            expand(radio - 20);
+        } 
+        favoriteStrand = favorite;
     }
     
+    /**
+     * metodo que simula la segunda linea de la solucion del proyecto
+     * @param bridges son los puentes que se van a crear
+     */
+    public void create2(int[][] bridges){
+        String color = "black";
+        for (int i = 0; i < bridges.length ; i++) {
+            addBridge(color, bridges[i][0], bridges[i][1]);
+            System.out.println(""+  bridges[i][0]+ bridges[i][1]);
+        }
+    }
+    
+    
+    /* 
+    //Metodo creado para verificar que create2 funciona
+    public void useCreate2(){
+        int[][] matriz = {         
+            {100, 1},
+            {200, 2},
+            {300, 3}
+        };
+        create2(matriz);
+    }
+    */
     
     /**
      * Traduce de distancia, camino a coordenadas x y
@@ -151,21 +166,41 @@ public class Spiderweb
         return respuesta;
     }
     
+    /**
+     * Metodo para consultar los puentes que No se han utilizado
+     */
+    public void unusedBridges(){
+        for (int i = 0; i < unusedBridges.size(); i++) {
+            System.out.println(unusedBridges.get(i));
+        }
+    } 
+        
     
+    /**
+     * Metodo para consultar los puentes que No se han utilizado
+     */
+    public int spiderLastPath(){
+        return spiderLastPath;
+    }
     
     /**
      * añade puentes a la telaraña teniendo en cuenta sus coordenadas aisgnadas en la matriz de modelamiento de la telaraña
      * y añade las coordenadas a un arrayList
      * @param color que tendra el puente
-     * @param x1 es la coordenada x inicial
-     * @param y1 es la coordenada y inicial
-     * @param x2 es la coordenada x final
-     * @param y2 es la coordenada y final
+     * @param distancia es la distanica donde estara ubicado el puente con respecto al centro de la telaraña
+     * @param camino es el camino donde se ubicar el punto inicial del puente 
      */
-    public void addBridge(String color, int x1, int y1, int x2, int y2) {
+    public void addBridge(String color, int distancia, int camino) {
+        int[] respuesta = new int[3];
+        respuesta = traductor(distancia , camino);
+        int x1 = respuesta[0];
+        int y1 = respuesta[1];
+        int x2 = respuesta[2];
+        int y2 = respuesta[3];
         bridge.addBridge(color, x1, y1, x2, y2);
         int[] coords = {x1, y1, x2, y2};
         coordPuentes.add(coords);
+        unusedBridges.add(color);
     }
     
     
@@ -175,6 +210,9 @@ public class Spiderweb
      */
     public void deleteBridge(String color){
         bridge.deleteBridge(color);
+        if (unusedBridges.contains(color)){
+            unusedBridges.remove(color);
+        }
     }
     
     /**
@@ -182,24 +220,48 @@ public class Spiderweb
      * El procedimiento es el siguiente:
      * Borrar el puente con las coordenadas anteriores, Crear el puente con las coordenadas nuevas
      * @param color se usa para ubicar el puente que se va a reubicar
-     * @param x1 es la coordenada x inicial
-     * @param y1 es la coordenada y inicial
-     * @param x2 es la coordenada x final
-     * @param y2 es la coordenada y final
+     * @param color que tendra el puente
+     * @param distancia es la distanica donde estara ubicado el puente con respecto al centro de la telaraña
+     * @param camino es el camino donde se ubicar el punto inicial del puente 
      */
-    public void relocateBridge(String color, int nuevoX1, int nuevoY1, int nuevoX2, int nuevoY2){
-        bridge.relocateBridge(color, nuevoX1, nuevoY1, nuevoX2, nuevoY2);
+    public void relocateBridge(String color, int distancia, int camino){
+        int[] respuesta = new int[3];
+        respuesta = traductor(distancia , camino);
+        int x1 = respuesta[0];
+        int y1 = respuesta[1];
+        int x2 = respuesta[2];
+        int y2 = respuesta[3];
+        bridge.relocateBridge(color, x1, y1, x2, y2);
     }
+    
+    
+    private int[] traductorSpots(int distancia, int camino){
+        double angleIncrement = 360.0 / strandNumber;
+        double angle = angleIncrement * camino;
+        double angle2 = angleIncrement * (camino + 1);
+    
+        int x1 = (int) ((distancia * Math.cos(Math.toRadians(angle))));
+        int x1Corregido = x1 + 350;
+   
+        int y1 = (int) ((distancia * Math.sin(Math.toRadians(angle))));
+        int y1Corregido =  350 - y1;
+        
+        int[] respuesta = {x1Corregido, y1Corregido};
+        return respuesta;
+    }
+    
     
     /**
      * Agrega los puntos, utilizando la matriz (spotMatriz).
      * Si hay un spot es true sino es false
      * @param color del spot
-     * @param x es la coordenada x 
-     * @param y es la coordenada y
+     * @param distancia es la distanica donde estara ubicado el puente con respecto al centro de la telaraña
+     * @param camino es el camino donde se ubicara el spot
      */
-    public void addSpot(String color, int X, int Y){
-        spot.addSpot(color, X, Y);
+    public void addSpot(String color, int distancia, int camino){
+        int[] respuesta = new int[1];
+        respuesta = traductorSpots(distancia , camino);
+        spot.addSpot(color, respuesta[0] - 15, respuesta[1]);
     }
     
     
@@ -262,7 +324,6 @@ public class Spiderweb
      * Consulta la cantidad de spots creados
      */
     public int spots(){
-        spotNumber++;
         return spotNumber;
     }
     
