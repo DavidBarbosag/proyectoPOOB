@@ -1,4 +1,4 @@
-import java.awt.geom.Line2D;
+  import java.awt.geom.Line2D;
 import java.awt.BasicStroke;
 /**
  * Clase dedicada a construir lineas
@@ -12,7 +12,7 @@ public class Line {
     private boolean isVisible;
     
     /**
-     * Metodo constructor de la clase Line
+     * Método constructor de la clase Line
      */
     public Line() {
         x1 = 1;
@@ -24,7 +24,7 @@ public class Line {
     }
 
     /**
-     * hace visible la linea
+     * Hace visible la linea
      */
     public void makeVisible() {
         isVisible = true;
@@ -32,7 +32,7 @@ public class Line {
     }
     
     /**
-     * hace invisible la linea
+     * Hace invisible la linea
      */
     public void makeInvisible() {
         erase();
@@ -40,7 +40,9 @@ public class Line {
     }
 
     /**
-     * mueve la linea a unas coordenadas especificas
+     * Mueve la linea a unas coordenadas especificas
+     * @param dx a donde se va a mover en x.
+     * @param dy a donde se va a mover en y.
      */
     public void move(int dx, int dy) {
         erase();
@@ -53,6 +55,7 @@ public class Line {
 
     /**
      * Cambia color de la linea
+     * @param newColor indica el nuevo color de la línea.
      */
     public void changeColor(String newColor) {
         color = newColor;
@@ -77,7 +80,8 @@ public class Line {
     
     
     /**
-     * rota la linea a un angulo en especifico
+     * Rota la linea a un angulo en especifico
+     * @angle 
      */
     public void rotate(double angle) {
         // Calcula las coordenadas relativas de (x2, y2) respecto a (x1, y1)
@@ -172,6 +176,3 @@ public class Line {
         erase();
     }
 }
-
-
-
