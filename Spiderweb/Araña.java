@@ -152,8 +152,8 @@ public class Araña
     }
     /**
      * A continuación se creará el método moverTodos para la araña:
-     * @param dx, dx coordenada donde se movera x
-     * @param dy, dy coordenada donde se movera y
+     * @param dx dx coordenada donde se movera x.
+     * @param dy dy coordenada donde se movera y.
      */
     public void moverTodos(int dx, int dy) {
         cara.makeInvisible();
@@ -197,8 +197,8 @@ public class Araña
     /**
      * En siguiente método, se tomó la desición de que cuando la araña está caminando cambiará
      * de color con el fin de identificar la acción.
-     * @param coordenada x a donde se movera la araña
-     * @param coordenada y a donde se movera la araña
+     * @param x coordenada x a donde se movera la araña.
+     * @param y coordenada y a donde se movera la araña.
      */
     public void spiderWalk(int x,int y){
         changeColor2();
@@ -244,8 +244,8 @@ public class Araña
     
     /**
      * A continuación se creará el método para mover la araña a una posición específica:
-     * @param coordenada x a donde se movera la araña
-     * @param coordenada y a donde se movera la araña
+     * @param coordenadaX coordenada x a donde se movera la araña.
+     * @param coordenadaY coordenada y a donde se movera la araña.
      */
     public void moveAllTo(int coordenadaX, int coordenadaY){
         cara.moveTo(coordenadaX, coordenadaY);
@@ -258,6 +258,3 @@ public class Araña
         int[] pos = getPosicion();
     }
 }
-
-    
-
