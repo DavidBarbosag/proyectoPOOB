@@ -18,13 +18,14 @@ public class Spiderweb
     private int strandNumber = 0;
     private int spotNumber = 0;
     private int spiderLastPath;
-    //private int radio = web.getRadio();
     private Bridge bridge;
     private Spot spot;
     private int favoriteStrand = 0;
     private ArrayList<int[]> coordPuentes = new ArrayList<>();
     private HashMap<String, int[]> puentes = new HashMap<>(); 
     private ArrayList<String> unusedBridges = new ArrayList<>();
+    private HashMap<Integer, Integer> coordenadasPuentes = new HashMap<>(); 
+    
     /**
      * Constructor for objects of class Spiderweb
      */
@@ -77,6 +78,10 @@ public class Spiderweb
         return strandNumber;
     }
     
+    public HashMap<Integer, Integer> getCoordenadasPuentes() {
+        return coordenadasPuentes;
+    }
+
     /**
      * Añade un nuevo hilo a la telaraña
      */
@@ -123,12 +128,11 @@ public class Spiderweb
         String color = "black";
         for (int i = 0; i < bridges.length ; i++) {
             addBridge(color, bridges[i][0], bridges[i][1]);
-            System.out.println(""+  bridges[i][0]+ bridges[i][1]);
         }
     }
     
     
-    
+    /*
     //Metodo creado para verificar que create2 funciona
     public void useCreate2(){
         int[][] matriz = {         
@@ -138,9 +142,7 @@ public class Spiderweb
         };
         create2(matriz);
     }
-    
-    
-    
+    */
     
     /**
      * Metodo para consultar los puentes que No se han utilizado
@@ -169,6 +171,7 @@ public class Spiderweb
     public void addBridge(String color, int distancia, int camino) {
         bridge.addBridge(color, distancia, camino, strandNumber);
         unusedBridges.add(color);
+        coordenadasPuentes.put(distancia, camino);
     }
     
     

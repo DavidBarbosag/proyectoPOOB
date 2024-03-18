@@ -41,10 +41,6 @@ public class Bridge {
         puentesGraficos.add(puente);
     }
     
-    
-    
-    
-    
     /**
      * Traduce de distancia, camino a coordenadas x y
      * @param distancia a donde se movera el objeto
@@ -72,9 +68,6 @@ public class Bridge {
         return respuesta;
     }
     
-    
-    
-
     /**
      * Parte logica del metodo addBridge
      */
