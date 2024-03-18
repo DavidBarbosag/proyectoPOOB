@@ -10,23 +10,25 @@ public class Simulate
     private int favoriteStrand;
     private HashMap<Integer, Integer> coordenadasPuentes = new HashMap<>();
     
-
+    /**
+     * Constructor de Simulate.
+     */
     public Simulate(){
         spiderweb = new Spiderweb();
     }
     
     /**
-     * este metodo nos da las coordenadas de los puentes usados
+     * Este metodo nos da las coordenadas de los puentes usados.
      */
-    public void accessCoordenadasPuentes() {
+    private void accessCoordenadasPuentes() {
         coordenadasPuentes = spiderweb.getCoordenadasPuentes();
     }
     
     /**
-     * metodo que simula la primera linea de la solucion del proyecto
-     * @param strands es el numero de hilos que tendra la telararaña
-     * @param radio es la longitud que tendran los hilos de la telaraña
-     * @param favorite es la hebra favorita de la araña
+     * Método que simula la primera linea de la solucion del proyecto.
+     * @param strands es el numero de hilos que tendra la telararaña.
+     * @param radio es la longitud que tendran los hilos de la telaraña.
+     * @param favorite es la hebra favorita de la araña.
      */
     public void create1(int strands, int radio, int favorite){
         spiderweb.create1(strands, radio, favorite);
@@ -34,13 +36,16 @@ public class Simulate
     }
         
      /**
-     * metodo que simula la segunda linea de la solucion del proyecto
-     * @param bridges son los puentes que se van a crear
+     * Método que simula la segunda linea de la solucion del proyecto.
+     * @param bridges son los puentes que se van a crear.
      */
     public void create2(int[][] bridges){
         spiderweb.create2(bridges);
     }
     
+    /**
+     * Pasa de coordenadas de puentes a matriz.
+     */
     private int[][] DisCam(){
         int[][] respuesta = new int[coordenadasPuentes.size()][3];
         int index = 0;
@@ -53,6 +58,9 @@ public class Simulate
         return respuesta;
     }
     
+    /**
+     * Método que hace la simulación final.
+     */
     public void simulation(){
         accessCoordenadasPuentes();
         int[][] datosPuentes = DisCam();
@@ -79,7 +87,7 @@ public class Simulate
 
     
     /**
-     * Traduce distancia y camino en coordenadas x,y
+     * Traduce distancia y camino en coordenadas x,y.
      * @param distancia es un vector que se va a traducir.
      * @param camino es un vector que se va a traducir.
      * @param strandNumber sirve para ubicar las líneas que hay y ver los ángulos.
@@ -98,6 +106,4 @@ public class Simulate
         int[] respuesta = {x1Corregido, y1Corregido};
         return respuesta;
     }
-    
-    
 }
