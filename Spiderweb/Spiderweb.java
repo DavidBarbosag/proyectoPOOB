@@ -27,7 +27,7 @@ public class Spiderweb
     private HashMap<Integer, Integer> coordenadasPuentes = new HashMap<>(); 
     
     /**
-     * Constructor for objects of class Spiderweb
+     * Constructor de Spiderweb.
      */
     public Spiderweb()
     {
@@ -37,9 +37,8 @@ public class Spiderweb
         spot();
     }
     
-    
     /**
-     * subMetodo del constructor
+     * SubMetodo del constructor.
      */
     private void araña()
     {
@@ -49,14 +48,14 @@ public class Spiderweb
     }
     
     /**
-     * subMetodo del constructor
+     * SubMetodo del constructor.
      */
     private void web(){
         web = new Web();
     }
     
     /**
-     * subMetodo del constructor
+     * SubMetodo del constructor.
      */
     private void bridge()
     {
@@ -64,26 +63,35 @@ public class Spiderweb
     }
     
     /**
-     * subMetodo del constructor
+     * SubMetodo del constructor.
      */
     private void spot(){
         spot = new Spot();
     }
     
+    /**
+     * Método set.
+     */
     public void setStrandNumber(int strandNumber) {
         this.strandNumber = strandNumber;
     }
 
+    /**
+     * Método get.
+     */
     public int getStrandNumber() {
         return strandNumber;
     }
     
+    /**
+     * Método get.
+     */
     public HashMap<Integer, Integer> getCoordenadasPuentes() {
         return coordenadasPuentes;
     }
 
     /**
-     * Añade un nuevo hilo a la telaraña
+     * Añade un nuevo hilo a la telaraña.
      */
     public void addStrand(){
         web.addStrand();
@@ -92,6 +100,7 @@ public class Spiderweb
     
     /**
      * Expande el radio de la telaraña y sus hilos en un numero determinado(extra).
+     * @param extra es la cantidad adicional que se va a extener cada hilo.
      */
     public void expand(int extra){
         web.expand(extra);
