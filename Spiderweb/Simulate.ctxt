@@ -1,0 +1,22 @@
+#BlueJ class context
+comment0.target=Simulate
+comment0.text=\r\n\ Clase\ encargada\ de\ la\ simulacion.\r\n
+comment1.params=
+comment1.target=Simulate()
+comment2.params=
+comment2.target=void\ accessCoordenadasPuentes()
+comment2.text=\r\n\ este\ metodo\ nos\ da\ las\ coordenadas\ de\ los\ puentes\ usados\r\n
+comment3.params=strands\ radio\ favorite
+comment3.target=void\ create1(int,\ int,\ int)
+comment3.text=\r\n\ metodo\ que\ simula\ la\ primera\ linea\ de\ la\ solucion\ del\ proyecto\r\n\ @param\ strands\ es\ el\ numero\ de\ hilos\ que\ tendra\ la\ telarara\u00F1a\r\n\ @param\ radio\ es\ la\ longitud\ que\ tendran\ los\ hilos\ de\ la\ telara\u00F1a\r\n\ @param\ favorite\ es\ la\ hebra\ favorita\ de\ la\ ara\u00F1a\r\n
+comment4.params=bridges
+comment4.target=void\ create2(int[][])
+comment4.text=\r\n\ metodo\ que\ simula\ la\ segunda\ linea\ de\ la\ solucion\ del\ proyecto\r\n\ @param\ bridges\ son\ los\ puentes\ que\ se\ van\ a\ crear\r\n
+comment5.params=
+comment5.target=int[][]\ DisCam()
+comment6.params=
+comment6.target=void\ simulation()
+comment7.params=distancia\ camino\ strandNumber
+comment7.target=int[]\ traductor(int,\ int,\ int)
+comment7.text=\r\n\ Traduce\ distancia\ y\ camino\ en\ coordenadas\ x,y\r\n\ @param\ distancia\ es\ un\ vector\ que\ se\ va\ a\ traducir.\r\n\ @param\ camino\ es\ un\ vector\ que\ se\ va\ a\ traducir.\r\n\ @param\ strandNumber\ sirve\ para\ ubicar\ las\ l\u00EDneas\ que\ hay\ y\ ver\ los\ \u00E1ngulos.\r\n
+numComments=8

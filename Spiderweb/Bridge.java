@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * Clase dedicada a crear los puentes
  */
 public class Bridge {
-    private HashMap<String, Coordenadas[]> puentes;
+    private HashMap<String, Coordenadas> puentes;
     private List<Line> puentesGraficos;
     
     /**
@@ -19,21 +19,55 @@ public class Bridge {
     }
 
     /**
-     * añade puentes a la telaraña teniendo en cuenta sus coordenadas aisgnadas en la matriz de modelamiento de la telarañá
+     * añade puentes a la telaraña teniendo en cuenta sus coordenadas aisgnadas en la matriz de modelamiento de la telaraña
+     * y añade las coordenadas a un arrayList
+     * @param color que tendra el puente
+     * @param distancia es la distanica donde estara ubicado el puente con respecto al centro de la telaraña
+     * @param camino es el camino donde se ubicar el punto inicial del puente
+     * @param strandNumber es el numero de hebras que hay en la Web
      */
-    public void addBridge(String color, int x1, int y1, int x2, int y2){
-        Coordenadas[] coordenadas = {new Coordenadas(x1, y1), new Coordenadas(x2, y2)};
+    public void addBridge(String color, int distancia, int camino, int strandNumber){
+        int[] respuesta = new int[3];
+        respuesta = traductor(distancia , camino, strandNumber);
+        Coordenadas coordenadas = new Coordenadas(distancia, camino);
         puentes.put(color, coordenadas);
         Line puente = new Line();
-        puente.setX1(x1);
-        puente.setY1(y1);
-        puente.setX2(x2);
-        puente.setY2(y2);
+        puente.setX1(respuesta[0]);
+        puente.setY1(respuesta[1]);
+        puente.setX2(respuesta[2]);
+        puente.setY2(respuesta[3]);
         puente.changeColor(color);
         puente.makeVisible();
         puentesGraficos.add(puente);
     }
+    
+    /**
+     * Traduce de distancia, camino a coordenadas x y
+     * @param distancia a donde se movera el objeto
+     * @param camino  a donde se movera el objeto
+     */
+    private int[] traductor(int distancia, int camino, int strandNumber){
+        double angleIncrement = 360.0 / strandNumber;
+        double angle = angleIncrement * camino;
+        double angle2 = angleIncrement * (camino + 1);
+        
+        int x1 = (int) ((distancia * Math.cos(Math.toRadians(angle))));
+        int x1Corregido = x1 + 350;
+   
+        int y1 = (int) ((distancia * Math.sin(Math.toRadians(angle))));
+        int y1Corregido =  350 - y1;
+ 
+        int x2 = (int) ((distancia * Math.cos(Math.toRadians(angle2))));
+        int x2Corregido = x2 + 350;
 
+        int y2 = (int) ((distancia * Math.sin(Math.toRadians(angle2))));
+        int y2Corregido =  350 - y2;
+        
+        int[] respuesta = {x1Corregido, y1Corregido, x2Corregido, y2Corregido};
+        
+        return respuesta;
+    }
+    
     /**
      * Parte logica del metodo addBridge
      */
@@ -60,10 +94,10 @@ public class Bridge {
      * El procedimiento es el siguiente:
      * Borrar el puente con las coordenadas anteriores, Crear el puente con las coordenadas nuevas
      */
-    public void relocateBridge(String color, int nuevoX1, int nuevoY1, int nuevoX2, int nuevoY2) {
+    public void relocateBridge(String color, int distancia, int camino, int strandNumber) {
         deleteBridge(color);
         borrarPuenteGrafico(color);
-        addBridge(color, nuevoX1, nuevoY1, nuevoX2, nuevoY2);
+        addBridge(color, distancia, camino, strandNumber);
     }
 
     /**
@@ -85,7 +119,7 @@ public class Bridge {
         }
     }
     
-    private Coordenadas[] obtenerCoordenadas(String color) {
+    private Coordenadas obtenerCoordenadas(String color) {
         return puentes.get(color);
     }
     
@@ -95,20 +129,20 @@ public class Bridge {
      * Clase para almacenar las coordenadas de los puentes
      */
     private class Coordenadas {
-        private int x;
-        private int y;
+        private int distancia;
+        private int camino;
 
-        public Coordenadas(int x, int y) {
-            this.x = x;
-            this.y = y;
+        public Coordenadas(int distancia, int y) {
+            this.distancia = distancia;
+            this.camino = camino;
         }
 
-        public int getX() {
-            return x;
+        public int getDistancia() {
+            return distancia;
         }
 
-        public int getY() {
-            return y;
+        public int getCamino() {
+            return camino;
         }
     }
 }

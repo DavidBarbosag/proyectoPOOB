@@ -18,13 +18,14 @@ public class Spiderweb
     private int strandNumber = 0;
     private int spotNumber = 0;
     private int spiderLastPath;
-    //private int radio = web.getRadio();
     private Bridge bridge;
     private Spot spot;
     private int favoriteStrand = 0;
     private ArrayList<int[]> coordPuentes = new ArrayList<>();
     private HashMap<String, int[]> puentes = new HashMap<>(); 
     private ArrayList<String> unusedBridges = new ArrayList<>();
+    private HashMap<Integer, Integer> coordenadasPuentes = new HashMap<>(); 
+    
     /**
      * Constructor for objects of class Spiderweb
      */
@@ -77,6 +78,10 @@ public class Spiderweb
         return strandNumber;
     }
     
+    public HashMap<Integer, Integer> getCoordenadasPuentes() {
+        return coordenadasPuentes;
+    }
+
     /**
      * Añade un nuevo hilo a la telaraña
      */
@@ -123,12 +128,11 @@ public class Spiderweb
         String color = "black";
         for (int i = 0; i < bridges.length ; i++) {
             addBridge(color, bridges[i][0], bridges[i][1]);
-            System.out.println(""+  bridges[i][0]+ bridges[i][1]);
         }
     }
     
     
-    /* 
+    /*
     //Metodo creado para verificar que create2 funciona
     public void useCreate2(){
         int[][] matriz = {         
@@ -139,33 +143,6 @@ public class Spiderweb
         create2(matriz);
     }
     */
-    
-    /**
-     * Traduce de distancia, camino a coordenadas x y
-     * @param distancia a donde se movera el objeto
-     * @param camino  a donde se movera el objeto
-     */
-    private int[] traductor(int distancia, int camino){
-        double angleIncrement = 360.0 / strandNumber;
-        double angle = angleIncrement * camino;
-        double angle2 = angleIncrement * (camino + 1);
-        
-        int x1 = (int) ((distancia * Math.cos(Math.toRadians(angle))));
-        int x1Corregido = x1 + 350;
-   
-        int y1 = (int) ((distancia * Math.sin(Math.toRadians(angle))));
-        int y1Corregido =  350 - y1;
- 
-        int x2 = (int) ((distancia * Math.cos(Math.toRadians(angle2))));
-        int x2Corregido = x2 + 350;
-
-        int y2 = (int) ((distancia * Math.sin(Math.toRadians(angle2))));
-        int y2Corregido =  350 - y2;
-        
-        int[] respuesta = {x1Corregido, y1Corregido, x2Corregido, y2Corregido};
-        
-        return respuesta;
-    }
     
     /**
      * Metodo para consultar los puentes que No se han utilizado
@@ -192,16 +169,9 @@ public class Spiderweb
      * @param camino es el camino donde se ubicar el punto inicial del puente 
      */
     public void addBridge(String color, int distancia, int camino) {
-        int[] respuesta = new int[3];
-        respuesta = traductor(distancia , camino);
-        int x1 = respuesta[0];
-        int y1 = respuesta[1];
-        int x2 = respuesta[2];
-        int y2 = respuesta[3];
-        bridge.addBridge(color, x1, y1, x2, y2);
-        int[] coords = {x1, y1, x2, y2};
-        coordPuentes.add(coords);
+        bridge.addBridge(color, distancia, camino, strandNumber);
         unusedBridges.add(color);
+        coordenadasPuentes.put(distancia, camino);
     }
     
     
@@ -226,13 +196,7 @@ public class Spiderweb
      * @param camino es el camino donde se ubicar el punto inicial del puente 
      */
     public void relocateBridge(String color, int distancia, int camino){
-        int[] respuesta = new int[3];
-        respuesta = traductor(distancia , camino);
-        int x1 = respuesta[0];
-        int y1 = respuesta[1];
-        int x2 = respuesta[2];
-        int y2 = respuesta[3];
-        bridge.relocateBridge(color, x1, y1, x2, y2);
+        bridge.relocateBridge(color, distancia, camino, strandNumber);
     }
     
     /**
